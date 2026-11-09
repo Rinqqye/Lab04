@@ -18,12 +18,12 @@ SELECT COUNT(*) AS total_enrollments FROM enrollments;
 SELECT COUNT(*) AS total_results     FROM results;
 ```
 
-![groups](../images/step01_1.png)
-![students](../images/step01_2.png)
-![teachers](../images/step01_3.png)
-![courses](../images/step01_4.png)
-![enrollments](../images/step01_5.png)
-![results](../images/step01_6.png)
+![groups](../image/step01_1.png)
+![students](../image/step01_2.png)
+![teachers](../image/step01_3.png)
+![courses](../image/step01_4.png)
+![enrollments](../image/step01_5.png)
+![results](../image/step01_6.png)
 
 | Таблица | Ожидается | Получено |
 |---|---|---|
@@ -48,7 +48,7 @@ SELECT * FROM enrollments LIMIT 5;
 PRAGMA table_info(enrollments);
 ```
 
-![Структура таблицы enrollments](../images/step02_1.png)
+![Структура таблицы enrollments](../image/step02_1.png)
 
 ### Описание таблиц
 
@@ -92,7 +92,7 @@ WHERE hours >= 60
 ORDER BY hours DESC, course_name;
 ```
 
-![Курсы от 60 часов](../images/step03_1.png)
+![Курсы от 60 часов](../image/step03_1.png)
 
 **Объяснение:** `WHERE` оставляет только курсы с `hours >= 60`, `ORDER BY` сортирует сначала по часам (от большего к меньшему), а при равенстве по названию. Получено 15 курсов, самый длинные (5 курсов): Компьютерные сети, Мобильная разработка, Облачные технологии, Проектный практикум, Разработка API ( 84 ч).
 
@@ -108,7 +108,7 @@ ORDER BY full_name
 LIMIT 10;
 ```
 
-![Студенты 2025 года](../images/step03_2.png)
+![Студенты 2025 года](../image/step03_2.png)
 
 **Объяснение:** условие `admission_year = 2025` отбирает нужный набор, сортировка по `full_name` даёт алфавитный порядок, а `LIMIT 10` обрезает вывод до десяти строк.
 
@@ -122,7 +122,7 @@ LIMIT 10;
 SELECT COUNT(*) AS total_enrollments FROM enrollments;
 ```
 
-![Количество записей](../images/step04_1.png)
+![Количество записей](../image/step04_1.png)
 
 **Объяснение:** получено 1000 (ожидается 1000).
 
@@ -136,7 +136,7 @@ SELECT MIN(hours) AS min_hours,
 FROM courses;
 ```
 
-![Статистика по hours](../images/step04_2.png)
+![Статистика по hours](../image/step04_2.png)
 
 **Объяснение:** минимум 24 ч, максимум 84 ч, среднее 54 ч, суммарно 1620 ч по всем 30 курсам.
 
@@ -150,7 +150,7 @@ HAVING COUNT(*) > 100
 ORDER BY total DESC;
 ```
 
-![Статусы с HAVING](../images/step04_3.png)
+![Статусы с HAVING](../image/step04_3.png)
 
 **Объяснение:** `GROUP BY` считает записи отдельно для каждого статуса, `HAVING` оставляет только группы, где количество больше 100. Сумма по всем трём статусам (без `HAVING`) равна 1000: completed 850, active 100, cancelled 50.
 
@@ -172,7 +172,7 @@ ORDER BY s.id
 LIMIT 10;
 ```
 
-![Студенты и группы](../images/step05_1.png)
+![Студенты и группы](../image/step05_1.png)
 
 **Объяснение:** каждому студенту по `group_id` подбирается строка из `groups`. Выведено 10 строк.
 
@@ -186,7 +186,7 @@ ORDER BY c.id
 LIMIT 10;
 ```
 
-![Курсы и преподаватели](../images/step05_2.png)
+![Курсы и преподаватели](../image/step05_2.png)
 
 **Объяснение:** связь идёт по `courses.teacher_id = teachers.id`, выведено 10 строк.
 
@@ -199,7 +199,7 @@ LEFT JOIN courses AS c ON c.teacher_id = t.id
 ORDER BY t.id, c.id;
 ```
 
-![LEFT JOIN преподавателей](../images/step05_3.png)
+![LEFT JOIN преподавателей](../image/step05_3.png)
 
 Проверка, что все 15 преподавателей присутствуют:
 
@@ -209,7 +209,7 @@ FROM teachers AS t
 LEFT JOIN courses AS c ON c.teacher_id = t.id;
 ```
 
-![Проверка преподавателей](../images/step05_4.png)
+![Проверка преподавателей](../image/step05_4.png)
 
 **Объяснение:** получено `teachers_in_output = 15` (ожидается 15). Строк в основном выводе ___, то есть больше 15, потому что преподаватель, ведущий несколько курсов, повторяется по одной строке на каждый курс. Если курсов у преподавателя нет, поля курса будут `NULL`.
 
@@ -229,7 +229,7 @@ FROM results
 WHERE score < 0 OR score > 100 OR score IS NULL;
 ```
 
-![Проверка оценок](../images/step06_1.png)
+![Проверка оценок](../image/step06_1.png)
 
 ### Запрос 6.2. Оценки без соответствующей записи на курс
 
@@ -240,7 +240,7 @@ LEFT JOIN enrollments AS e ON e.id = r.enrollment_id
 WHERE e.id IS NULL;
 ```
 
-![Проверка связей](../images/step06_2.png)
+![Проверка связей](../image/step06_2.png)
 
 ### Итоги проверок
 
@@ -282,7 +282,7 @@ ORDER BY score_range DESC, scores_count DESC
 LIMIT 10;
 ```
 
-![Топ-10 курсов по разбросу](../images/step07_1.png)
+![Топ-10 курсов по разбросу](../image/step07_1.png)
 
 **Объяснение:** наибольший разброс у курса «Математический анализ»: min = 30, max = 100, разброс = 70 при 35 оценках. Следом идут «Инженерия требований» (67) и «Основы программирования» (59). Если у нескольких курсов одинаковый разброс, они упорядочены по числу оценок.
 
@@ -304,7 +304,7 @@ ORDER BY score_range DESC, scores_count DESC
 LIMIT 10;
 ```
 
-![Разброс с фильтром по числу оценок](../images/step07_2.png)
+![Разброс с фильтром по числу оценок](../image/step07_2.png)
 
 **Объяснение:** после фильтра лидер по разбросу: «Математический анализ» (разброс 70, 35 оценок, средняя 74.74). Состав топа не изменился по сравнению с запросом 7.1.
 
@@ -319,7 +319,7 @@ INNER JOIN enrollments AS e ON e.id = r.enrollment_id
 INNER JOIN courses AS c ON c.id = e.course_id;
 ```
 
-![Проверка соединений](../images/step07_3.png)
+![Проверка соединений](../image/step07_3.png)
 
 **Объяснение:** получено 850 , ожидается 850, то есть равно числу строк в `results`. Значит, цепочка соединений построена верно.
 
